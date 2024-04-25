@@ -10,7 +10,7 @@ on:
     branches: [ master ]
 
 jobs:
-  build-java:
+  build:
     runs-on: ${{matrix.os}}
     strategy:
       matrix:
