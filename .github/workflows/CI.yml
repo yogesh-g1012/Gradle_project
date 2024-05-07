@@ -16,7 +16,7 @@ on:
 jobs:
   build:
 
-    runs-on: local_runner_aws
+    runs-on: self-hosted
 #    strategy:
 #      matrix:
 #        os: [windows-latest,ubunto-latest,macos-latest] 
