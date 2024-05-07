@@ -16,10 +16,10 @@ on:
 jobs:
   build:
 
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        os: [windows-latest,ubunto-latest,macos-latest] 
+    runs-on: local_runner_aws
+#    strategy:
+#      matrix:
+#        os: [windows-latest,ubunto-latest,macos-latest] 
     permissions:
       contents: read
 
