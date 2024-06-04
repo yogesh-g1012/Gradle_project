@@ -16,7 +16,7 @@ on:
 jobs:
   build:
 
-    runs-on: ubunto-latest
+    runs-on: faps-turing
 #    strategy:
 #      matrix:
 #        os: [windows-latest,ubunto-latest,macos-latest] 
@@ -35,8 +35,8 @@ jobs:
     - name: Build with Gradle
       run: ./gradlew build
 
-    - uses: mr-smithers-excellent/docker-build-push@v6
-      name: Build & push Docker image
+    - name: Build & push Docker image
+      uses: mr-smithers-excellent/docker-build-push@v6
       with:
         image: anoshrz/java_project
         tags: v1, latest
