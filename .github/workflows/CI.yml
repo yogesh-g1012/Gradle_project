@@ -16,7 +16,7 @@ on:
 jobs:
   build:
 
-    runs-on: faps-turing
+    runs-on: ubunto-latest
 #    strategy:
 #      matrix:
 #        os: [windows-latest,ubunto-latest,macos-latest] 
