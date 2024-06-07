@@ -31,3 +31,4 @@ def merge_data():
 
 if __name__ == "__main__":
     merge_data()
+    print(test_wrong_value)
