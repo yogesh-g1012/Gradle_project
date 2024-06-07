@@ -41,6 +41,7 @@ jobs:
       id: pylint_check
       run: |
         if grep -E "(syntax-error|fatal)" pylint_report.txt; then
+          echo "Critical pylint errors found in the code. Please check pylint_report.txt for details."
           exit 1
         fi
 
