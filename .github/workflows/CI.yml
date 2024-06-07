@@ -10,6 +10,9 @@ name: Java CI with Gradle
 on:
   push:
     branches: [ "master" ]
+    paths-ignore:
+      - 'src/python/**'
+      - '.github/workflows/lint.yml'
   pull_request:
     branches: [ "master" ]
 
