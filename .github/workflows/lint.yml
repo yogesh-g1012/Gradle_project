@@ -30,7 +30,7 @@ jobs:
     - name: Run pylint
       id: lint
       continue-on-error: true
-      run: pylint . > pylint_report.txt
+      run: pylint .
     
     - name: Send code rating to slack
       run: |
