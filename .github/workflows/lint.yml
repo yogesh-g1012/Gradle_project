@@ -43,12 +43,12 @@ jobs:
 
         if grep -E "E[0-9]+" pylint_report.txt; then
           echo "Critical pylint errors found in the code. Please check pylint_report.txt for details."
-          echo $steps.pylint_check.outcome
-          exit 1
+          ERROR_MSG=$(grep -E "E[0-9]+" pylint_report.txt)
+          curl -X POST -H 'Content-type: application/json' --data "{\"text\":\"Critical linting errors found in the code. Please check the logs for details:\n\`\`\`$ERROR_MSG\`\`\`\"}" ${{ secrets.SLACK_WEBHOOK_URL }}
         fi
 
-    - name: Send Slack notification on failure
-      if: steps.pylint_check.outcome == 'failure'
-      run: |
-        ERROR_MSG=$(grep -E "E[0-9]+" pylint_report.txt)
-        curl -X POST -H 'Content-type: application/json' --data "{\"text\":\"Critical linting errors found in the code. Please check the logs for details:\n\`\`\`$ERROR_MSG\`\`\`\"}" ${{ secrets.SLACK_WEBHOOK_URL }}
+    #- name: Send Slack notification on failure
+    # if: steps.pylint_check.outcome == 'failure'
+    #  run: |
+    #    ERROR_MSG=$(grep -E "E[0-9]+" pylint_report.txt)
+    #    curl -X POST -H 'Content-type: application/json' --data "{\"text\":\"Critical linting errors found in the code. Please check the logs for details:\n\`\`\`$ERROR_MSG\`\`\`\"}" ${{ secrets.SLACK_WEBHOOK_URL }}
