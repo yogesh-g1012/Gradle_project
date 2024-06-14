@@ -60,7 +60,7 @@ jobs:
                 "type": "section",
                 "text": {
                   "type": "mrkdwn",
-                  "text": "Critical linting errors found in the code. Please check the logs for details:\n\`\`\`hvvlbj\`\`\`\"
+                  "text": "Critical linting errors found in the code. Please check the logs for details"
                 }
               }
             ]
