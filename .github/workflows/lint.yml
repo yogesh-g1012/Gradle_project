@@ -37,15 +37,12 @@ jobs:
         RATING=$(grep -oP "Your code has been rated at \K[0-9\.]+/[0-9\.]+" pylint_report.txt)
         curl -X POST -H 'Content-type: application/json' --data "{\"text\":\"Your code rating of your recent push is: ${RATING}\"}" ${{ secrets.SLACK_WEBHOOK_URL }}
     
-    - name: Check for critical pylint errors
-      id: pylint_check
+    - name: Extract error message
+      id: extract_error
       run: |
-
-        if grep -E "E[0-9]+" pylint_report.txt; then
-          echo "Critical pylint errors found in the code. Please check pylint_report.txt for details."
-          ERROR_MSG=$(grep -E "E[0-9]+" pylint_report.txt)
-          curl -X POST -H 'Content-type: application/json' --data "{\"text\":\"Critical linting errors found in the code. Please check the logs for details:\n\`\`\`$ERROR_MSG\`\`\`\"}" ${{ secrets.SLACK_WEBHOOK_URL }}
-        fi
+        ERROR_MSG=$(grep -E "E[0-9]+" pylint_report.txt)
+        echo "ERROR_MSG=${ERROR_MSG}" >> $GITHUB_ENV
+          
 
     - name: Send custom JSON data to Slack workflow using original actions
       id: slack
@@ -54,13 +51,13 @@ jobs:
         # For posting a rich message using Block Kit
         payload: |
           {
-            "text": "GitHub Action build result: ${{ job.status }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}",
+            "text": "Pylint score",
             "blocks": [
               {
                 "type": "section",
                 "text": {
                   "type": "mrkdwn",
-                  "text": "Critical linting errors found in the code. Please check the logs for details"
+                  "text": "Pylint found the following errors:\n```${{ env.ERROR_MSG }}```"
                 }
               }
             ]
