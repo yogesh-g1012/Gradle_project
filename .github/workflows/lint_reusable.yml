@@ -1,4 +1,4 @@
-name: Linting to Slack
+name: Reusable Linting to Slack
 on:
   workflow_call:
     secrets:
