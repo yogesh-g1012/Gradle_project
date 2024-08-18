@@ -1,0 +1,12 @@
+name: Lint and Format Code
+on:
+  push:
+    paths:
+      - 'src/python/**'
+      - '.github/workflows/lint.yml'
+jobs:
+  lint-and-format:
+    uses: anosh-ar/FAPS_Github_Action/.github/workflows/lint_reusable.yml@master
+    secrets:
+      SLACK_WEBHOOK_URL: ${{secrets.SLACK_WEBHOOK_URL}}
+    

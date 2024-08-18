@@ -1,0 +1,41 @@
+name: Reusable Linting to Slack
+on:
+  workflow_call:
+    secrets:
+      SLACK_WEBHOOK_URL:
+        required: true
+
+jobs:
+  lint-and-format:
+    runs-on: arc-runner-set
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.8'
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install black pylint
+    - name: Format code with Black
+      run: black .
+    - name: Run pylint
+      id: lint
+      continue-on-error: true
+      run: pylint ./**/**.py > pylint_report.txt
+    
+    - name: Send code rating to slack
+      run: |
+        RATING=$(grep -oP "Your code has been rated at \K[0-9\.]+/[0-9\.]+" pylint_report.txt)
+        curl -X POST -H 'Content-type: application/json' --data "{\"text\":\"Your code rating of your recent push is: ${RATING}\"}" ${{ secrets.SLACK_WEBHOOK_URL }}
+    
+    - name: Check for critical pylint errors
+      id: pylint_check
+      run: |
+        if grep -E "E[0-9]+" pylint_report.txt; then
+          echo "Critical pylint errors found in the code. Please check pylint_report.txt for details."
+          ERROR_MSG=$(grep -E "E[0-9]+" pylint_report.txt)
+          curl -X POST -H 'Content-type: application/json' --data "{\"text\":\"Critical linting errors found in the code. Please check the logs for details:\n\`\`\`$ERROR_MSG\`\`\`\"}" ${{ secrets.SLACK_WEBHOOK_URL }}
+        fi
