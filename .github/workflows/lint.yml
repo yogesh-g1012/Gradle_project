@@ -6,7 +6,6 @@ on:
       - '.github/workflows/lint.yml'
 jobs:
   lint-and-format:
-    runs-on: arc-runner-set
     uses: anosh-ar/FAPS_Github_Action/.github/workflows/lint_reusable.yml@master
     secrets:
       SLACK_WEBHOOK_URL: ${{secrets.SLACK_WEBHOOK_URL}}
