@@ -12,12 +12,10 @@ on:
 jobs:
   build-java:
 
-
-    runs-on: ubantu-latest
-    # runs-on: ${{matrix.os}}
-    # strategy:
-    #   matrix:
-    #     os:  [ubantu-latest,window-latest,macOS-latest]
+    runs-on: ${{matrix.os}}
+    strategy:
+      matrix:
+        os:  [ubantu-latest,window-latest,macOS-latest]
     
     steps:
     - uses: actions/checkout@v2
@@ -33,11 +31,16 @@ jobs:
     - name: Build with Gradle
       run: ./gradlew build
 
+publish:
+
     - name : Build and Push Docker Image
-      uses: mr-smithers-excellent/docker-build-push@v4
-      with:
-        image: xuedinge233/demo-app
-        registry: docker.io
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
+      run: 
+
+    # - name: Build and Push Docker Image
+    #   uses: mr-smithers-excellent/docker-build-push@v4
+    #   with:
+    #     image: nanajanashia/demo-app
+    #     registry: docker.io
+    #     username: ${{ secrets.DOCKER_USERNAME }}
+    #     password: ${{ secrets.DOCKER_PASSWORD }}
          
