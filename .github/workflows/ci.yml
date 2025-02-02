@@ -27,6 +27,8 @@ jobs:
 
     - name: Build with Gradle
       run: ./gradlew build
+    - name: Verify JAR File Exists
+      run: ls -l build/libs/ || (echo "JAR file not found!" && exit 1)
 
     - name: Build and Push Docker Image
       uses: mr-smithers-excellent/docker-build-push@v4
