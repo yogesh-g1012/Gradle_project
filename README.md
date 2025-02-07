@@ -21,10 +21,3 @@ This project demonstrates how to:
 - **Infrastructure as Code**: Terraform, Ansible  
 
 ---
-
-## 🚀 Getting Started
-
-### **1️⃣ Clone the Repository**
-```sh
-git clone https://github.com/yourusername/cicd-practice.git
-cd cicd-practice
